@@ -69,5 +69,4 @@
     width: 100%;
     background-color: #3388B1;
   }
-
 </style>
