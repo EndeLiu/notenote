@@ -30,13 +30,16 @@
       },
       methods: {
         onSubmit(){
-          this.axios.get('/register')
-            .then(function (response) {
-              console.log(response);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
+          this.axios.post("/register",{
+            username:this.registerForm.username,
+            password:this.registerForm.password
+          })
+          .then(function (response) {
+            console.log(response)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
         }
       }
 

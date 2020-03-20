@@ -18,12 +18,6 @@ axios.defaults.baseURL = "/api"
 axios.defaults.withCredentials = true
 Vue.use(VueAxios,axios);
 
-// Vue.prototype.$axios=axios;
-// // 跨域相关
-// Axios.defaults.baseURL="/api"
-
-
-
 
 
 /* eslint-disable no-new */
