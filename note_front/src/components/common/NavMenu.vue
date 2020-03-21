@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
     <el-menu
-      :default-active="'/home'"
+      :default-active="'/bookshelf'"
       class="el-menu-demo"
       mode="horizontal"
       router
