@@ -21,4 +21,16 @@ public class NoteService {
         return noteDao.findAllByCategory(category);
     }
 
+    public Note getById(int id){
+        return noteDao.findById(id).get();
+    }
+
+    public void updateNote(Note note){
+        noteDao.save(note);
+    }
+
+    public void deleteById(int id) {
+        noteDao.deleteById(id);
+    }
+
 }

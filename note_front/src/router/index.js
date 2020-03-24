@@ -6,6 +6,8 @@ import Login from "../components/Login";
 import Home from "../components/home/Home";
 import Index from "../components/Index";
 import Bookshelf from "../components/bookshelf/Bookshelf";
+import NoteEdit from "../components/note/NoteEdit";
+import NoteDetail from "../components/note/NoteDetail";
 
 Vue.use(Router)
 
@@ -41,6 +43,16 @@ export default new Router({
           path: '/bookshelf',
           name: 'Bookshelf',
           component: Bookshelf
+        },
+        {
+          path: '/note/edit',
+          name: 'NoteEdit',
+          component: NoteEdit
+        },
+        {
+          path: '/note/detail',
+          name: 'NoteDetail',
+          component: NoteDetail
         },
       ]
     },
