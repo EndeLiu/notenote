@@ -1,11 +1,16 @@
 <template>
-    <div>
-      <mavon-editor
-        v-model="note.contentMd"
-        @save="saveNote"
-      >
-      </mavon-editor>
-    </div>
+    <el-col :span="24">
+      <el-card class="note" style="width: 100%;text-align: center" shadow="never" v-model="note">
+        <div slot="header" class="clearfix">
+          <span>{{ note.name }}</span>
+          <el-button style="float: right; padding: 3px 0" type="text"><i class="el-icon-more" @click="read(note.id)"></i></el-button>
+        </div>
+        <mavon-editor
+          v-model="note.contentMd"
+          @save="saveNote">
+        </mavon-editor>
+      </el-card>
+    </el-col>
 </template>
 
 <script>
@@ -52,6 +57,15 @@
           })
           .catch(function (error) {
             console.log(error)
+          })
+        },
+        read(id){
+          this.$router.push({
+            path:'/note/detail',
+            name:'NoteDetail',
+            query:{
+              noteId:id
+            }
           })
         }
       }

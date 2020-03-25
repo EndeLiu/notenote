@@ -1,7 +1,6 @@
 <template>
   <div class="nav-bar">
     <el-menu
-      :default-active="'/bookshelf'"
       class="el-menu-demo"
       mode="horizontal"
       router

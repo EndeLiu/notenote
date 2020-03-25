@@ -134,6 +134,7 @@
   }
   .note-abs{
     font-size: 12px;
+    height: 50px;
   }
   .note-operation{
     float: right;
@@ -141,9 +142,7 @@
     margin-right: 2px;
     margin-left: 2px!important;
   }
-  .el-card__body{
-    height: 50px;
-  }
+
   .el-card__header {
     padding: 9px 20px;
   }
