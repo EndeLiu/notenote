@@ -58,6 +58,14 @@ public class NoteController {
 
 
     @CrossOrigin
+    @GetMapping("/api/notes")
+    @ResponseBody
+    public List<Note> getNoteList(){
+        return noteService.getAll();
+    }
+
+
+    @CrossOrigin
     @GetMapping("/api/note/{id}")
     @ResponseBody
     public Response getNote(@PathVariable("id") int id){
