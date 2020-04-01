@@ -9,7 +9,17 @@
         {{ item.name }}
       </el-menu-item>
 
+      <el-submenu index="2" style="float:right;">
+        <template slot="title">{{userFlag.name}}</template>
+
+        <el-menu-item v-for="(item,i) in userFlag.menuList" :index="item.url" :key="i">{{item.name}}</el-menu-item>
+        <el-menu-item :style="{display:isLogin}"
+                      @click="logout">注销</el-menu-item>
+      </el-submenu>
+
+
     </el-menu>
+
   </div>
 </template>
 
@@ -18,18 +28,58 @@
       name: "NavMenu",
       data() {
         return {
-          navList:[
-            {name:'首页',url:'/home'},
-            {name:'书架',url:'/bookshelf'},
+          isLogin:'none',
+          userFlag: {
+            name: '',
+            menuList: []
+          },
+
+          navList: [
+            {name: '首页', url: '/home'},
+            {name: '书架', url: '/bookshelf'},
           ],
         };
       },
+
+      mounted() {
+        if (window.localStorage.getItem("user") != null) {
+          this.userFlag.name = JSON.parse(window.localStorage.getItem("user")).username
+          this.userFlag.menuList = [
+            {url: '/home', name: '用户中心'},
+            {url: '/home', name: '笔记管理'},
+          ]
+          this.isLogin = 'inline-block'
+        } else {
+          this.userFlag.name = "未登录"
+          this.userFlag.menuList = [
+            {url: '/register', name: '注册'},
+            {url: '/login', name: '登录'},
+          ]
+          this.isLogin = 'none'
+        }
+      },
+
       methods: {
         handleSelect(key, keyPath) {
-          console.log(key, keyPath);
+          console.log(key, keyPath)
+        },
+        logout(){
+          var _this = this
+          this.axios.get('/logout')
+          .then(function (response) {
+            if(response.data.status === 200){
+              _this.$store.commit('logout')
+              _this.$router.replace('/login')
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+
         }
       }
     }
+
 </script>
 
 <style>
@@ -40,6 +90,14 @@
   }
   .el-menu-item{
     font-weight: bolder;
+  }
+  .el-menu--horizontal>.el-menu-item {
+    height: 35px;
+    line-height: 35px;
+  }
+  .el-menu--horizontal>.el-submenu .el-submenu__title {
+    height: 35px;
+    line-height: 35px;
   }
 
 </style>

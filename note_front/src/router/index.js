@@ -13,11 +13,6 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'HelloWorld',
-    //   component: HelloWorld
-    // },
     {
       path: '/register',
       name: 'Register',
@@ -37,22 +32,31 @@ export default new Router({
         {
           path: '/home',
           name: 'Home',
-          component: Home
+          component: Home,
         },
         {
           path: '/bookshelf',
           name: 'Bookshelf',
-          component: Bookshelf
+          component: Bookshelf,
+          meta: {
+            requireAuth:true
+          }
         },
         {
           path: '/note/edit',
           name: 'NoteEdit',
-          component: NoteEdit
+          component: NoteEdit,
+          meta: {
+            requireAuth:true
+          }
         },
         {
           path: '/note/detail',
           name: 'NoteDetail',
-          component: NoteDetail
+          component: NoteDetail,
+          meta: {
+            requireAuth:true
+          }
         },
       ]
     },

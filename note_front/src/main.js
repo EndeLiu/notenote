@@ -27,6 +27,25 @@ Vue.use(VueAxios,axios);
 
 Vue.use(mavonEditor)
 
+
+
+router.beforeEach((to,from,next) =>{
+  if(to.meta.requireAuth){
+    if(store.state.currentUser !== null && store.state.currentUser){
+      next()
+    }
+    else{
+      next({
+        path:'/login',
+        query: {redirect: to.fullPath}
+      })
+    }
+  }
+  else{
+    next()
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

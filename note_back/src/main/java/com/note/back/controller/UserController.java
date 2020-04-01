@@ -60,4 +60,13 @@ public class UserController {
             return new Response(500,"failure",null);
         }
     }
+
+    @CrossOrigin
+    @GetMapping("api/logout")
+    @ResponseBody
+    public Response logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return new Response(200,"登出",null);
+    }
 }
