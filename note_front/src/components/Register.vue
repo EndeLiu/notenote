@@ -10,6 +10,9 @@
             <el-input placeholder="请输入密码" v-model="registerForm.password" show-password></el-input>
           </el-form-item>
           <el-form-item>
+            <el-input placeholder="请确认密码" v-model="registerForm.passwordConfirm" show-password></el-input>
+          </el-form-item>
+          <el-form-item>
             <el-button type="primary" @click="onSubmit" class="form-confirm">注册</el-button>
           </el-form-item>
         </el-form>
@@ -25,17 +28,27 @@
           registerForm:{
             username:'',
             password:'',
+            passwordConfirm:'',
           }
         }
       },
       methods: {
         onSubmit(){
+          var _this = this
+          if(this.registerForm.password !== this.registerForm.passwordConfirm){
+            this.$message({
+              message:'两次输入的密码不一致',
+              type:'error'
+            })
+            return
+          }
+
           this.axios.post("/register",{
             username:this.registerForm.username,
             password:this.registerForm.password
           })
           .then(function (response) {
-            console.log(response)
+            _this.$router.replace('/login')
           })
           .catch(function (error) {
             console.log(error)

@@ -12,6 +12,9 @@
         <el-form-item>
           <el-button type="primary" @click="onSubmit" class="form-confirm">登录</el-button>
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="toRegister" class="form-confirm">去注册</el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -52,6 +55,10 @@
             console.log(error)
           })
 
+        },
+
+        toRegister(){
+          this.$router.replace('/register')
         }
       }
     }
