@@ -1,7 +1,7 @@
 <template>
     <div style="text-align: initial;">
       <el-row>
-        <el-card shadow="hover" v-for="(item,i) in notes" :key="i"  class="box-card" >
+        <el-card shadow="hover" v-for="(item,i) in visibleNotes" :key="i"  class="box-card" >
           <div slot="header" class="clearfix">
             <span class="note-title">{{item.name}}</span>
             <el-tooltip transition="0s"  class="item" effect="dark" content="编辑笔记内容" placement="top-start">
@@ -21,19 +21,28 @@
             {{restrict(item.abs)}}
           </div>
         </el-card>
-
-        <el-card class="box-card" shadow="hover">
-          <div slot="header" class="clearfix">
-            <span  class="note-title">新增笔记本</span>
-          </div>
-          <div  class="text item" style="text-align: center;">
-            <i class="el-icon-circle-plus-outline" style="font-size: 40px;cursor: pointer" @click="addNote"></i>
-          </div>
-        </el-card>
       </el-row>
 
       <el-row style="position: fixed;bottom: 10px;right: 10px">
-        <el-button type="primary" icon="el-icon-edit" circle @click="editCategory"></el-button>
+        <el-button type="success" circle @click="editCategory">
+          <i class="el-icon-edit"></i>
+        </el-button>
+      </el-row>
+
+      <el-row style="position: fixed;bottom: 70px;right: 10px">
+        <el-button type="primary" circle @click="addNote">
+          <i class="el-icon-document-add"></i>
+        </el-button>
+      </el-row>
+
+      <el-row class="page">
+        <el-pagination
+          layout="prev, pager, next"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :total="notes.length"
+          @current-change="handelPageChange">
+        </el-pagination>
       </el-row>
 
     </div>
@@ -44,10 +53,27 @@
       name: "Notes",
       data() {
         return {
-          notes:[]
+          notes:[],
+          visibleNotes:[],
+          currentPage:1,
+          pageSize:12,
         }
       },
       methods: {
+        showNotes(notes){
+          this.notes = notes
+          //0-11
+          //12-24
+          this.visibleNotes = []
+          for(var i=this.pageSize*(this.currentPage-1);i<(this.pageSize)*(this.currentPage);i++){
+            if(i>=this.notes.length){
+              break
+            }
+            this.visibleNotes.push(this.notes[i])
+          }
+          console.log(this.visibleNotes)
+        },
+
         restrict(abs){
           if(abs.length<48){
             return abs
@@ -118,6 +144,18 @@
           this.$emit('editCategory')
         },
 
+        handelPageChange(pageBack){
+          this.currentPage = pageBack
+          this.visibleNotes = []
+          for(var i=this.pageSize*(this.currentPage-1);i<(this.pageSize)*(this.currentPage);i++){
+            if(i>=this.notes.length){
+              break
+            }
+            this.visibleNotes.push(this.notes[i])
+          }
+          console.log(this.visibleNotes)
+        },
+
 
       }
     }
@@ -126,7 +164,7 @@
 <style>
   .box-card{
     display: inline-block;
-    width: 25%;
+    width: 23%;
     margin-left: 15px;
   }
   .note-title{
@@ -145,6 +183,15 @@
 
   .el-card__header {
     padding: 9px 20px;
+  }
+  .page{
+    position:fixed;
+    margin:auto;
+    left:0;
+    right:0;
+    bottom:0;
+    width:200px;
+    height:50px;
   }
 
 

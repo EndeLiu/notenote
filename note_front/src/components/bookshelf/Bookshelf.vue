@@ -26,7 +26,7 @@
           this.axios.get('categories/'+currentCid+'/notes')
           .then(function (response) {
             if(response.status === 200){
-              _this.$refs.notes.notes = response.data
+              _this.$refs.notes.showNotes(response.data)
             }
           })
         },
@@ -36,6 +36,7 @@
           this.$refs.noteEditForm.isCreate = false
           this.$refs.noteEditForm.form = noteInfo
         },
+
         handleAddNote(){
           var currentCid = this.$refs.categoryBar.currentCid
           this.$refs.noteEditForm.dialogFormVisible = true
@@ -43,9 +44,12 @@
           this.$refs.noteEditForm.form = {}
           this.$refs.noteEditForm.cid = this.$refs.categoryBar.currentCid
         },
+
         handleEditCategory(){
           this.$refs.categoryBar.edit()
-        }
+        },
+
+
 
 
 
