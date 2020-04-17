@@ -24,13 +24,26 @@
       },
       methods: {
         update(){
-          var _this = this;
+          var _this = this
+          var cid
+          if(this.$route.query.cid === undefined){
+            cid = undefined
+          }
+          else{
+            cid = this.$route.query.cid
+          }
+
           this.axios.get("/categories")
             .then(function (response) {
               if(response.status === 200) {
                 _this.categories = response.data
                 if(_this.categories.length>0){
-                  _this.currentCid = _this.categories[0].id.toString()
+                  if(cid === undefined){
+                    _this.currentCid = _this.categories[0].id.toString()
+                  }
+                  else{
+                    _this.currentCid = cid
+                  }
                   _this.$emit('categorySelect')
                 }
               }

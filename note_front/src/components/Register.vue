@@ -15,6 +15,9 @@
           <el-form-item>
             <el-button type="primary" @click="onSubmit" class="form-confirm">注册</el-button>
           </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="toLogin" class="form-confirm">去登录</el-button>
+          </el-form-item>
         </el-form>
       </div>
     </div>
@@ -53,6 +56,10 @@
           .catch(function (error) {
             console.log(error)
           })
+        },
+
+        toLogin(){
+          this.$router.replace('/login')
         }
       }
 

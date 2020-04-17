@@ -7,9 +7,6 @@
             <el-tooltip transition="0s"  class="item" effect="dark" content="编辑笔记内容" placement="top-start">
                 <el-button class="note-operation" type="text" @click="editNote(item.id)"><i class="el-icon-edit"></i></el-button>
             </el-tooltip>
-            <el-tooltip transition="0s" class="item" effect="dark" content="查看笔记内容" placement="top-start">
-              <el-button class="note-operation" type="text" @click="readNote(item.id)"><i class="el-icon-more"></i></el-button>
-            </el-tooltip>
             <el-tooltip transition="0s" class="item" effect="dark" content="编辑笔记标题与简介" placement="top-start">
               <el-button class="note-operation" type="text" @click="editInfo(item)"><i class="el-icon-edit-outline"></i></el-button>
             </el-tooltip>
@@ -17,7 +14,7 @@
               <el-button class="note-operation" type="text" @click="deleteNote(item.id)"><i class="el-icon-delete"></i></el-button>
             </el-tooltip>
           </div>
-          <div class="text item note-abs">
+          <div class="text item note-abs" @click="readNote(item.id)">
             {{restrict(item.abs)}}
           </div>
         </el-card>
@@ -173,6 +170,7 @@
   .note-abs{
     font-size: 12px;
     height: 50px;
+    cursor: pointer;
   }
   .note-operation{
     float: right;

@@ -1,4 +1,8 @@
 <template>
+  <div>
+    <el-row>
+      <el-button type="primary" icon="el-icon-back"  class="back" @click="back"></el-button>
+    </el-row>
     <el-row style="margin-top: 10px">
       <el-col :span="bookmarkCol">
         <bookmark ref="bookmark"></bookmark>
@@ -37,6 +41,8 @@
         </el-card>
       </el-col>
     </el-row>
+  </div>
+
 </template>
 
 <script>
@@ -225,6 +231,10 @@
           this.bookmarkCol = b!=null?b:this.bookmarkCol
           this.noteCol = n!=null?n:this.noteCol
           this.quoteCol = q!=null?q:this.quoteCol
+        },
+
+        back(){
+          this.$router.go(-1);
         }
 
       }
@@ -239,5 +249,13 @@
   }
   .note-html{
     height: 450px;
+  }
+  .back{
+    position: absolute;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    left: 10px;
+    padding: 5px 35px;
+    z-index: 99;
   }
 </style>

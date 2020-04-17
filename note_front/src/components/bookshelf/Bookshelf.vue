@@ -23,6 +23,11 @@
         getNotes(){
           var _this = this
           var currentCid = this.$refs.categoryBar.currentCid
+          this.$router.push({
+            query:{
+              cid:currentCid
+            }
+          }).catch(data => {  })
           this.axios.get('categories/'+currentCid+'/notes')
           .then(function (response) {
             if(response.status === 200){
