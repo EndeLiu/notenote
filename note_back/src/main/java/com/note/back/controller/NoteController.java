@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.note.back.Response.Response;
 import com.note.back.pojo.Category;
 import com.note.back.pojo.Note;
+import com.note.back.pojo.User;
 import com.note.back.service.CategoryService;
 import com.note.back.service.NoteService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -25,7 +28,8 @@ public class NoteController {
     @GetMapping("/api/categories")
     @ResponseBody
     public List<Category> getCategoryList(){
-        return categoryService.getAll();
+        Subject subject = SecurityUtils.getSubject();
+        return categoryService.getAllByUser((User)subject.getPrincipal());
     }
 
     @CrossOrigin
@@ -40,8 +44,10 @@ public class NoteController {
     @PostMapping("/api/category/add")
     @ResponseBody
     public Response addCategory(@RequestBody Category requestCategory){
+        Subject subject = SecurityUtils.getSubject();
         Category category = new Category();
         category.setName(requestCategory.getName());
+        category.setAuthor((User)subject.getPrincipal());
         categoryService.updateCategory(category);
         return new Response(200,"成功",null);
     }
@@ -111,6 +117,7 @@ public class NoteController {
     @PostMapping("/api/update/category/{id}/note/add")
     @ResponseBody
     public Response addNote(@RequestBody Note requestNote,@PathVariable("id") int id){
+        Subject subject = SecurityUtils.getSubject();
         Note note = new Note();
         note.setName(requestNote.getName());
         note.setAbs(requestNote.getAbs());
@@ -118,6 +125,7 @@ public class NoteController {
         note.setCategory(category);
         note.setCreatedTime(new Timestamp(System.currentTimeMillis()));
         note.setLastModifiedTime(new Timestamp(System.currentTimeMillis()));
+        note.setAuthor((User)subject.getPrincipal());
         noteService.updateNote(note);
         return new Response(200,"成功",null);
     }
