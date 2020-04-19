@@ -19,7 +19,7 @@
             </el-button>
           </div>
           <el-scrollbar style="height: 100%">
-            <div v-html="note.contentHtml" class="text note-html markdown-body" @click="quoteNote"></div>
+            <div v-html="note.contentHtml" class="text note-html markdown-body" @click="handleHtmlClick"></div>
           </el-scrollbar>
         </el-card>
       </el-col>
@@ -93,7 +93,6 @@
                 let newHtml = _this.appendPrefix(_this.note.contentHtml)
                 _this.note.contentHtml = _this.removeTarget(newHtml)
                 _this.getTitles(_this.note.contentHtml)
-
               }
             })
             .catch(function (error) {
@@ -110,6 +109,10 @@
               let a = doc[i].children[0]
               let originId = a.getAttribute("id")
               a.setAttribute("id",'title_'+originId)
+              let operationBtn = document.createElement("i")
+              operationBtn.setAttribute("class","el-icon-caret-bottom")
+              operationBtn.style.cursor = "pointer"
+              doc[i].appendChild(operationBtn)
             }
           }
           return div.innerHTML
@@ -192,11 +195,10 @@
           return div.innerHTML
         },
 
-        quoteNote(ev) {
+        handleHtmlClick(ev){
           var _this = this
           var tempLink = (_this.quoteLink).toString()
           _this.quoteLink = ''
-
           if(ev.target.nodeName === "A" && ev.target.getAttribute("href").indexOf("notelink://") !== -1){
             var href = ev.target.getAttribute("href")
             var noteId = href.match(/(\d+)[&]/)[1]
@@ -225,7 +227,45 @@
 
 
           }
+          else if(ev.target.nodeName === "I"){
+            let foldBtn = ev.target
+            const foldTarget = foldBtn.parentNode
+            const foldLevel = parseInt(foldTarget.nodeName[1])
+            console.log(foldLevel)
+            if(foldBtn.getAttribute("class") === "el-icon-caret-bottom"){
+              foldBtn.setAttribute("class","el-icon-caret-top")
+              let itElement = foldTarget
+              while(true){
+                itElement = itElement.nextElementSibling
+                if(itElement == null){
+                  break
+                }
+                const itLevel = itElement.nodeName[0] === "H"?parseInt(itElement.nodeName[1]):9
+                if(itLevel <= foldLevel){
+                  break
+                }
+                itElement.style.display = "none"
+              }
+            }
+            else{
+              foldBtn.setAttribute("class","el-icon-caret-bottom")
+              let itElement = foldTarget
+              while(true){
+                itElement = itElement.nextElementSibling
+                if(itElement == null){
+                  break
+                }
+                const itLevel = itElement.nodeName[0] === "H"?parseInt(itElement.nodeName[1]):9
+                if(itLevel <= foldLevel){
+                  break
+                }
+                itElement.style.display = ""
+              }
+            }
+          }
+
         },
+
 
         colSwitch(b,n,q){
           this.bookmarkCol = b!=null?b:this.bookmarkCol
@@ -235,6 +275,10 @@
 
         back(){
           this.$router.go(-1);
+        },
+
+        foldSwitch(){
+          console.log("fold")
         }
 
       }
@@ -257,5 +301,8 @@
     left: 10px;
     padding: 5px 35px;
     z-index: 99;
+  }
+  .op-btn{
+    cursor: pointer;
   }
 </style>
