@@ -68,7 +68,7 @@
   .container{
     height: 100%;
     width: 100%;
-    background-image: url("../../static/bg.png");
+    background-image: url("../../static/homeMask.png");
     background-size: cover;
     position: fixed;
     left: 0px;
@@ -80,11 +80,13 @@
     width: 25%;
     min-width: 200px;
     padding: 30px 30px 15px 30px;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.8);
     box-shadow: 5px 3px 10px rgba(0,0,0,0.9);
   }
   .form-confirm{
     width: 100%;
-    background-color: #3388B1;
+    background-color: #585858;
+    border: 2px solid #484848;
+    border-radius: 4px;
   }
 </style>

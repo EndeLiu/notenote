@@ -110,8 +110,11 @@
               let originId = a.getAttribute("id")
               a.setAttribute("id",'title_'+originId)
               let operationBtn = document.createElement("i")
-              operationBtn.setAttribute("class","el-icon-caret-bottom")
+              operationBtn.setAttribute("class","el-icon-arrow-down")
+
               operationBtn.style.cursor = "pointer"
+              operationBtn.style.marginLeft = "5px"
+              operationBtn.style.fontSize = "20px"
               doc[i].appendChild(operationBtn)
             }
           }
@@ -125,9 +128,14 @@
           let titles = []
           for(var i=0;i<doc.length;i++){
             if(doc[i].nodeName.indexOf("H") !== -1){
+              const level = parseInt(doc[i].nodeName[1])
+              let stars = ""
+              for(var j=0;j<level;j++){
+                stars += "*"
+              }
               titles.push({
                 href:"#"+doc[i].children[0].getAttribute("id"),
-                name:doc[i].innerText,
+                name:stars+doc[i].innerText,
                 type:doc[i].nodeName[1]
               })
             }
@@ -196,74 +204,12 @@
         },
 
         handleHtmlClick(ev){
-          var _this = this
-          var tempLink = (_this.quoteLink).toString()
-          _this.quoteLink = ''
           if(ev.target.nodeName === "A" && ev.target.getAttribute("href").indexOf("notelink://") !== -1){
-            var href = ev.target.getAttribute("href")
-            var noteId = href.match(/(\d+)[&]/)[1]
-            var titleId = href.match(/[&](.*)/)[1]
-            if(_this.quote.id !== undefined && noteId === _this.quote.id.toString()){
-              _this.quoteLink = titleId
-              console.log("same")
-              $('#quoteArea').children(":first").animate({
-                scrollTop:document.getElementById(_this.quoteLink).offsetTop
-              },1000)
-            }
-            else {
-              _this.axios.get('note/'+noteId.toString())
-                .then(function (response) {
-                  if(response.data.status === 200){
-                    _this.quote = response.data.object
-                    _this.colSwitch(null,11,11)
-                    _this.quoteStatus = true
-                    _this.quoteLink = titleId
-                  }
-                })
-                .catch(function (error) {
-                  console.log(error)
-                })
-            }
-
-
+            this.quoteNote(ev)
           }
           else if(ev.target.nodeName === "I"){
-            let foldBtn = ev.target
-            const foldTarget = foldBtn.parentNode
-            const foldLevel = parseInt(foldTarget.nodeName[1])
-            console.log(foldLevel)
-            if(foldBtn.getAttribute("class") === "el-icon-caret-bottom"){
-              foldBtn.setAttribute("class","el-icon-caret-top")
-              let itElement = foldTarget
-              while(true){
-                itElement = itElement.nextElementSibling
-                if(itElement == null){
-                  break
-                }
-                const itLevel = itElement.nodeName[0] === "H"?parseInt(itElement.nodeName[1]):9
-                if(itLevel <= foldLevel){
-                  break
-                }
-                itElement.style.display = "none"
-              }
-            }
-            else{
-              foldBtn.setAttribute("class","el-icon-caret-bottom")
-              let itElement = foldTarget
-              while(true){
-                itElement = itElement.nextElementSibling
-                if(itElement == null){
-                  break
-                }
-                const itLevel = itElement.nodeName[0] === "H"?parseInt(itElement.nodeName[1]):9
-                if(itLevel <= foldLevel){
-                  break
-                }
-                itElement.style.display = ""
-              }
-            }
+            this.foldSwitch(ev)
           }
-
         },
 
 
@@ -277,8 +223,82 @@
           this.$router.go(-1);
         },
 
-        foldSwitch(){
-          console.log("fold")
+        /**html点击，激活引用笔记**/
+        quoteNote(ev){
+          var _this = this
+          var tempLink = (_this.quoteLink).toString()
+          _this.quoteLink = ''
+          var href = ev.target.getAttribute("href")
+          var noteId = href.match(/(\d+)[&]/)[1]
+          var titleId = href.match(/[&](.*)/)[1]
+          if(_this.quote.id !== undefined && noteId === _this.quote.id.toString()){
+            _this.quoteLink = titleId
+            //console.log("same")
+            $('#quoteArea').children(":first").animate({
+              scrollTop:document.getElementById(_this.quoteLink).offsetTop
+            },1000)
+          }
+          else {
+            _this.axios.get('note/'+noteId.toString())
+              .then(function (response) {
+                if(response.data.status === 200){
+                  _this.quote = response.data.object
+                  _this.colSwitch(null,11,11)
+                  _this.quoteStatus = true
+                  _this.quoteLink = titleId
+                }
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
+          }
+        },
+
+        /**html点击，章节折叠**/
+        foldSwitch(ev){
+          let foldBtn = ev.target
+          const foldTarget = foldBtn.parentNode
+          const foldLevel = parseInt(foldTarget.nodeName[1])
+          console.log(foldLevel)
+          if(foldBtn.getAttribute("class") === "el-icon-arrow-down"){
+            foldBtn.setAttribute("class","el-icon-arrow-up")
+            let itElement = foldTarget
+            while(true){
+              itElement = itElement.nextElementSibling
+              if(itElement == null){
+                break
+              }
+              const itLevel = itElement.nodeName[0] === "H"?parseInt(itElement.nodeName[1]):9
+              if(itLevel <= foldLevel){
+                break
+              }
+              itElement.style.display = "none"
+              if(itElement.getAttribute("flag") === null){
+                itElement.setAttribute("flag", foldLevel.toString());
+              }
+
+            }
+          }
+          else{
+            foldBtn.setAttribute("class","el-icon-arrow-down")
+            let itElement = foldTarget
+            while(true){
+              itElement = itElement.nextElementSibling
+              if(itElement == null){
+                break
+              }
+              const itLevel = itElement.nodeName[0] === "H"?parseInt(itElement.nodeName[1]):9
+              if(itLevel <= foldLevel){
+                break
+              }
+              if(itElement.getAttribute("flag") === foldLevel.toString()){
+                itElement.style.display = ""
+                itElement.removeAttribute("flag")
+              }
+
+
+            }
+          }
         }
 
       }
@@ -287,7 +307,7 @@
 
 <style scoped>
   .note {
-    width: 90%;
+    width: 95%;
     text-align: left;
     margin: auto;
   }
@@ -295,11 +315,13 @@
     height: 450px;
   }
   .back{
+    background-color: #585858!important;
+    border: 0px;
     position: absolute;
     margin-top: 10px;
     margin-bottom: 5px;
     left: 10px;
-    padding: 5px 35px;
+    padding: 5px 5px;
     z-index: 99;
   }
   .op-btn{

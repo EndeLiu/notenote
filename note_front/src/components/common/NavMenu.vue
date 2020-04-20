@@ -19,7 +19,6 @@
 
 
     </el-menu>
-
   </div>
 </template>
 
@@ -35,7 +34,7 @@
           },
 
           navList: [
-            {name: '首页', url: '/home'},
+            {name: 'NoteNote', url: '/home'},
             {name: '书架', url: '/bookshelf'},
           ],
         };
