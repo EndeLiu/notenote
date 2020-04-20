@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="form-body">
+    <el-row class="form-body">
       <h2>登录</h2>
       <el-form ref="form" :model="loginForm" label-width="0px">
         <el-form-item  class="form-item">
@@ -16,7 +16,7 @@
           <el-button type="primary" @click="toRegister" class="form-confirm">去注册</el-button>
         </el-form-item>
       </el-form>
-    </div>
+    </el-row>
   </div>
 </template>
 
@@ -73,12 +73,17 @@
     position: fixed;
     left: 0px;
     top:0px;
+    padding-top: 30px;
   }
   .form-body{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
     border-radius: 10px;
-    margin: 100px auto auto;
+    margin: 0 auto;
     width: 25%;
-    min-width: 200px;
+    min-width: 300px;
     padding: 30px 30px 15px 30px;
     background-color: rgba(255,255,255,0.8);
     box-shadow: 5px 3px 10px rgba(0,0,0,0.9);

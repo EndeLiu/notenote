@@ -37,10 +37,10 @@
     height: 200px;
     padding-top: 5px;
     overflow-y: auto;
-    overflow-x: hidden;
    }
   .bookmark-area::-webkit-scrollbar{
     width: 2px;
+    height: 2px;
   }
   .bookmark-area::-webkit-scrollbar-thumb{
     border-radius: 10px;

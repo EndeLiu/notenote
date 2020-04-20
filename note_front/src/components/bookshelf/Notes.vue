@@ -1,23 +1,26 @@
 <template>
     <div style="text-align: initial;">
-      <el-row>
-        <el-card shadow="hover" v-for="(item,i) in visibleNotes" :key="i"  class="box-card" >
-          <div slot="header" class="clearfix">
-            <span class="note-title">{{item.name}}</span>
-            <el-tooltip transition="0s"  class="item" effect="dark" content="编辑笔记内容" placement="top-start">
+      <el-row :gutter="10">
+        <el-col :xl="6" :lg="6" :sm="24" v-for="(item,i) in visibleNotes" :key="i">
+          <el-card shadow="hover"  class="box-card" >
+            <div slot="header" class="clearfix">
+              <span class="note-title">{{item.name}}</span>
+              <el-tooltip transition="0s"  class="item" effect="dark" content="编辑笔记内容" placement="top-start">
                 <el-button class="note-operation" type="text" @click="editNote(item.id)"><i class="el-icon-edit"></i></el-button>
-            </el-tooltip>
-            <el-tooltip transition="0s" class="item" effect="dark" content="编辑笔记标题与简介" placement="top-start">
-              <el-button class="note-operation" type="text" @click="editInfo(item)"><i class="el-icon-edit-outline"></i></el-button>
-            </el-tooltip>
-            <el-tooltip transition="0s" class="item" effect="dark" content="删除此笔记" placement="top-start">
-              <el-button class="note-operation" type="text" @click="deleteNote(item.id)"><i class="el-icon-delete"></i></el-button>
-            </el-tooltip>
-          </div>
-          <div class="text item note-abs" @click="readNote(item.id)">
-            {{restrict(item.abs)}}
-          </div>
-        </el-card>
+              </el-tooltip>
+              <el-tooltip transition="0s" class="item" effect="dark" content="编辑笔记标题与简介" placement="top-start">
+                <el-button class="note-operation" type="text" @click="editInfo(item)"><i class="el-icon-edit-outline"></i></el-button>
+              </el-tooltip>
+              <el-tooltip transition="0s" class="item" effect="dark" content="删除此笔记" placement="top-start">
+                <el-button class="note-operation" type="text" @click="deleteNote(item.id)"><i class="el-icon-delete"></i></el-button>
+              </el-tooltip>
+            </div>
+            <div class="text item note-abs" @click="readNote(item.id)">
+              {{restrict(item.abs)}}
+            </div>
+          </el-card>
+        </el-col>
+
       </el-row>
 
       <el-row style="position: fixed;bottom: 10px;right: 10px">
@@ -161,8 +164,9 @@
 <style>
   .box-card{
     display: inline-block;
-    width: 23%;
-    margin-left: 15px;
+    width: 95%;
+    margin-left: 5px;
+    margin-right: 5px;
   }
   .note-title{
     font-weight: bolder;
@@ -181,8 +185,10 @@
 
   .el-card__header {
     padding: 9px 20px;
+    height: 40px;
   }
   .page{
+    text-align: center;
     position:fixed;
     margin:auto;
     left:0;

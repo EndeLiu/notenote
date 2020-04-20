@@ -17,6 +17,10 @@
                       @click="logout">注销</el-menu-item>
       </el-submenu>
 
+      <li style="float: right;outline: none;cursor: pointer">
+        <i class="el-icon-full-screen" style="height: 35px;line-height: 35px;" @click="fullScreen"></i>
+      </li>
+
 
     </el-menu>
   </div>
@@ -75,6 +79,34 @@
             console.log(error)
           })
 
+        },
+        fullScreen(ev) {
+          const isFull=!!(document.webkitIsFullScreen || document.mozFullScreen ||
+            document.msFullscreenElement || document.fullscreenElement
+          )
+          if(!isFull){
+            var element = document.documentElement;
+            if (element.requestFullscreen) {
+              element.requestFullscreen()
+            } else if (element.msRequestFullscreen) {
+              element.msRequestFullscreen()
+            } else if (element.mozRequestFullScreen) {
+              element.mozRequestFullScreen()
+            } else if (element.webkitRequestFullscreen) {
+              element.webkitRequestFullscreen()
+            }
+          }
+          else{
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            } else if (document.msExitFullscreen) {
+              document.msExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+              document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+              document.webkitExitFullscreen();
+            }
+          }
         }
       }
     }
