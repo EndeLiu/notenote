@@ -13,9 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class NoteController {
@@ -128,6 +136,41 @@ public class NoteController {
         note.setAuthor((User)subject.getPrincipal());
         noteService.updateNote(note);
         return new Response(200,"成功",null);
+    }
+
+
+    final static String PIC_PATH = "static/pics/";
+
+    @CrossOrigin
+    @PostMapping("/api/pic")
+    @ResponseBody
+    public Response uploadPic(MultipartHttpServletRequest multiRequest, HttpServletRequest request){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String datePrefix = dateFormat.format(new Date());
+        String savePath = "src/main/resources/"+PIC_PATH;
+
+        File folder = new File(savePath+datePrefix);
+        if(!folder.isDirectory()){
+            folder.mkdirs();
+        }
+        String originalName = multiRequest.getFile("image").getOriginalFilename();
+        String saveName = UUID.randomUUID().toString() + originalName.substring(originalName.lastIndexOf("."),originalName.length());
+        String absolutePath = folder.getAbsolutePath();
+
+        try{
+            File fileToSave = new File(absolutePath + File.separator + saveName);
+            multiRequest.getFile("image").transferTo(fileToSave);
+            String returnPath = request.getScheme() + "://"
+                    + request.getServerName()+":"+request.getServerPort()
+                    +"/article/images/"
+                    + datePrefix +"/"+ saveName;
+
+            return new Response(200,"上传成功",returnPath);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new Response(500,"上传失败",null);
+
     }
 
 

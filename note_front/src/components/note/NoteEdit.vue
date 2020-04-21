@@ -7,8 +7,10 @@
           <el-button style="float: right; padding: 3px 0" type="text"><i class="el-icon-more" @click="read(note.id)"></i></el-button>
         </div>
         <mavon-editor
+          ref="md"
           v-model="note.contentMd"
-          @save="saveNote">
+          @save="saveNote"
+          @imgAdd="imgAdd">
           <button
             type="button"
             class="op-icon el-icon-s-management"
@@ -178,6 +180,25 @@
             clipboard.destroy()
           })
 
+        },
+        /** this part is to handle the upload of the pics**/
+        imgAdd(pos, $file){
+          var _this = this
+          var formData = new FormData();
+          formData.append('image', $file);
+          this.axios({
+            url: 'pic/',
+            method: 'post',
+            data: formData,
+            headers: { 'Content-Type': 'multipart/form-data' },
+          }).then((response) => {
+            if(response.status === 200){
+              let url = response.data.object;
+              _this.$refs.md.$img2Url(pos, url);
+            }
+            console.log(url)
+
+          })
         }
       }
     }

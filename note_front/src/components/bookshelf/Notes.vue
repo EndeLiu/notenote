@@ -75,6 +75,10 @@
         },
 
         restrict(abs){
+          if(abs === "" || abs == null){
+            return ""
+          }
+
           if(abs.length<48){
             return abs
           }

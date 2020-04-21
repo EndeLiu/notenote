@@ -27,6 +27,8 @@
           dialogFormVisible: false,
           formLabelWidth: '120px',
           form: {
+            name:"",
+            abs:""
           },
           cid:'',
         }
