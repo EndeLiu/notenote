@@ -4,10 +4,10 @@
       <el-button type="primary" icon="el-icon-back"  class="back" @click="back"></el-button>
     </el-row>
     <el-row style="margin-top: 10px">
-      <el-col :span="bookmarkCol">
+      <el-col :span="bookmarkCol" >
         <bookmark ref="bookmark"></bookmark>
       </el-col>
-      <el-col :span="noteCol">
+      <el-col :span="noteCol" style="border-left: 1px solid #585858;">
         <el-card class="box-card note" shadow="never" v-model="note">
           <div slot="header" class="clearfix">
             <span>{{note.name}}</span>
@@ -24,7 +24,7 @@
         </el-card>
       </el-col>
 
-      <el-col :span="quoteCol">
+      <el-col :span="quoteCol" style="border-left: 1px solid #585858;">
         <el-card class="box-card note" shadow="never" v-model="quote">
           <div slot="header" class="clearfix">
             <span>{{quote.name}}</span>
@@ -59,8 +59,8 @@
           quoteLink:'',
           bookmarkStatus:true,
           quoteStatus:false,
-          bookmarkCol:2,
-          noteCol:22,
+          bookmarkCol:3,
+          noteCol:21,
           quoteCol:0,
         }
       },
@@ -131,7 +131,7 @@
               const level = parseInt(doc[i].nodeName[1])
               let stars = ""
               for(var j=0;j<level;j++){
-                stars += "*"
+                stars += " * "
               }
               titles.push({
                 href:"#"+doc[i].children[0].getAttribute("id"),
@@ -156,7 +156,7 @@
         bookmarkSwitch(){
           if(this.bookmarkStatus){
             if(this.quoteStatus){
-              this.colSwitch(0,12,12)
+              this.colSwitch(0,14,10)
             }
             else{
               this.colSwitch(0,24,0)
@@ -164,10 +164,10 @@
           }
           else{
             if(this.quoteStatus){
-              this.colSwitch(2,11,11)
+              this.colSwitch(3,11,10)
             }
             else{
-              this.colSwitch(2,22,0)
+              this.colSwitch(3,21,0)
             }
           }
           this.bookmarkStatus = !this.bookmarkStatus
@@ -175,7 +175,7 @@
 
         closeQuote() {
           if(this.bookmarkStatus){
-            this.colSwitch(2,22,0)
+            this.colSwitch(3,21,0)
           }
           else{
             this.colSwitch(0,24,0)
@@ -243,7 +243,7 @@
               .then(function (response) {
                 if(response.data.status === 200){
                   _this.quote = response.data.object
-                  _this.colSwitch(null,11,11)
+                  _this.colSwitch(null,11,10)
                   _this.quoteStatus = true
                   _this.quoteLink = titleId
                 }
@@ -307,6 +307,7 @@
 
 <style scoped>
   .note {
+    border: 0px solid #EBEEF5!important;
     width: 95%;
     text-align: left;
     margin: auto;

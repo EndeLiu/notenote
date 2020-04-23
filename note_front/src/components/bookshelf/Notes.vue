@@ -166,6 +166,7 @@
 </script>
 
 <style>
+
   .box-card{
     display: inline-block;
     width: 95%;

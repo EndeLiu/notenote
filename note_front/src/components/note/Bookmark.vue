@@ -1,8 +1,8 @@
 <template>
     <div style="margin-top: 100px;margin-left: 10px">
       <el-menu class="el-menu-vertical-demo bookmark-area">
-        <el-menu-item v-for="(item,i) in titles" :key="i" class="bookmark-item">
-          <a :class="'title-index title-h'+item.type" @click="goTo(item.href)" >{{item.name}}</a>
+        <el-menu-item v-for="(item,i) in titles" :key="i" class="bookmark-item" @click="goTo(item.href)">
+          <a :class="'title-index title-h'+item.type"  >{{item.name}}</a>
           <span slot="title" style="vertical-align: center"></span>
         </el-menu-item>
       </el-menu>
@@ -26,15 +26,15 @@
 </script>
 
 <style>
+  .el-scrollbar {
+    overflow-x: hidden;
+  }
   .el-scrollbar__wrap{
     overflow-x: hidden;
   }
   .bookmark-area{
-    border-top: 2px solid #585858;
-    border-bottom: 2px solid #585858;
-    border-radius: 4px;
     border-right: 0px;
-    height: 200px;
+    height: 425px;
     padding-top: 5px;
     overflow-y: auto;
    }
@@ -56,16 +56,17 @@
   .bookmark-item{
     padding-left: 5px!important;
     padding-right: 5px;
-    border: 1px solid white;
-    border-radius: 3px;
     height: 20px;
     line-height: 20px;
     text-align: left;
   }
+  .bookmark-item:hover{
+    background-color: rgba(0,0,0,0.1);
+  }
   .title-index{
     color: #2c3e50;
     font-style:normal;
-    font-weight: bolder;
+    font-weight: lighter;
     font-size: 11px;
     text-decoration: none;
   }
