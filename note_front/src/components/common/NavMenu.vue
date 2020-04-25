@@ -120,15 +120,15 @@
     top: 0px;
   }
   .el-menu-item{
-    font-weight: bolder;
+    font-weight: bolder!important;
   }
   .el-menu--horizontal>.el-menu-item {
-    height: 35px;
-    line-height: 35px;
+    height: 35px!important;
+    line-height: 35px!important;
   }
   .el-menu--horizontal>.el-submenu .el-submenu__title {
-    height: 35px;
-    line-height: 35px;
+    height: 35px!important;
+    line-height: 35px!important;
   }
 
 </style>

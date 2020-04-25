@@ -65,13 +65,13 @@
 
 <style>
   .el-tabs__item {
-    height: 20px;
-    line-height: 20px;
+    height: 20px!important;
+    line-height: 20px!important;
     font-size: 12px;
   }
 
   .el-tabs__item.is-active {
-    font-weight: bolder;
+    font-weight: bolder!important;
   }
 
 </style>

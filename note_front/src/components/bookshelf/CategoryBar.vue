@@ -119,13 +119,13 @@
 
 <style>
   .el-tabs__new-tab{
-    border: 0px;
-    margin: 0px 10px 0px 0px;
-    font-size: 18px;
-    color: crimson;
+    border: 0px!important;
+    margin: 0px 10px 0px 0px!important;
+    font-size: 18px!important;
+    color: crimson!important;
   }
   .el-tabs__nav-prev,.el-tabs__nav-next {
-    line-height: 22px;
+    line-height: 22px!important;
   }
 
 </style>

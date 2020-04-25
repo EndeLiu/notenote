@@ -27,10 +27,10 @@
 
 <style>
   .el-scrollbar {
-    overflow-x: hidden;
+    overflow-x: hidden!important;
   }
   .el-scrollbar__wrap{
-    overflow-x: hidden;
+    overflow-x: hidden!important;
   }
   .bookmark-area{
     border-right: 0px;
@@ -55,10 +55,10 @@
   }
   .bookmark-item{
     padding-left: 5px!important;
-    padding-right: 5px;
-    height: 20px;
-    line-height: 20px;
-    text-align: left;
+    padding-right: 5px!important;
+    height: 20px!important;
+    line-height: 20px!important;
+    text-align: left!important;
   }
   .bookmark-item:hover{
     background-color: rgba(0,0,0,0.1);

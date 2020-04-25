@@ -189,8 +189,8 @@
   }
 
   .el-card__header {
-    padding: 9px 20px;
-    height: 40px;
+    padding: 9px 20px!important;
+    height: 40px!important;
   }
   .page{
     text-align: center;
